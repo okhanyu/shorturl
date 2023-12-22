@@ -102,8 +102,8 @@
     <br>
     <script>
 
-        var domain = "https://going.ee/";
-        
+        var domain = "https://go.going.ee/";
+        var apiurl = "https://go.going.ee";
         document.getElementById('short-url-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -111,7 +111,7 @@
             let password = document.getElementById('password').value;
             let url = document.getElementById('url').value;
 
-            let response = await fetch('https://going.ee', {
+            let response = await fetch(apiurl, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Basic ' + username + ':' + password,

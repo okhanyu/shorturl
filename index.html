@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-ch" >
 <head>
    <meta charset="utf-8">
@@ -70,7 +70,7 @@
 <br>
    <script>
 
-        var domain = "https://go.going.ee/";
+        var domain = "go.going.ee/";
         var apiurl = "https://go.going.ee";
         document.getElementById('short-url-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -101,8 +101,8 @@
 
             if (response.ok) {
                 let id = await response.text();
-                var r = domain + id;
-                document.getElementById('result').innerHTML = '<a id="resultLink" target="_blank" href="' + r +'"/>'+r+'</a>';
+                var r = "https://"+domain + id;
+                document.getElementById('result').innerHTML = '<a id="resultLink" target="_blank" href="' + r +'"/>'+domain+id+'</a>';
                 document.getElementById('tips').innerText = "Success : ";
 
             } else {

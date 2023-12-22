@@ -100,7 +100,7 @@
     <br>
     <script>
 
-        var domain = "https://shortlink.sohanyu.workers.dev/";
+        var domain = "https://going.ee/";
         
         document.getElementById('short-url-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -109,7 +109,7 @@
             let password = document.getElementById('password').value;
             let url = document.getElementById('url').value;
 
-            let response = await fetch('https://shortlink.sohanyu.workers.dev', {
+            let response = await fetch('https://going.ee', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Basic ' + username + ':' + password,

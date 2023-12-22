@@ -86,7 +86,7 @@
 <body>
     <div class="contain" style="">
         <form id="short-url-form">
-            <h5>SHORT URL TOOL! </h5>
+            <h4>SHORT URL TOOL! </h4>
             <input type="text" id="username" placeholder="Username" >
             <input type="password" id="password" placeholder="Password" >
             <input type="text" id="url" placeholder="URL to shorten">
@@ -125,7 +125,8 @@
                 var r = domain + id;
                 document.getElementById('result').innerHTML = '<a id="resultLink" target="_blank" href="' + r +'"/>'+r+'</a>';
             } else {
-                document.getElementById('result').textContent = 'Error: ' + response.status;
+                var err = response.status == 401 ? '账密错误':'';
+                document.getElementById('result').textContent = response.status + ' Error : ' + err;
             }
         });
 

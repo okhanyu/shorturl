@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang=zh-cn>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1,viewport-fit=cover,shrink-to-fit=no">
+    <title>SHORT URL TOOL !</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f2f2f2;
+        }
+
+         .contain{
+            display: flex;flex-wrap: wrap;flex-direction: column;min-width: 420px;max-width: 100%;width: 420px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        button {
+            border: 0px solid #ccc;
+            background-color: #445483;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #677ec3;
+        }
+        #resultParent {
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 22px;
+        }
+        #result {
+/*            margin-top: 20px;*/
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            min-height: 22px;
+        }
+        #copyButton{
+            margin-top: 20px;
+            width: 100%;
+        }
+        a{
+            text-decoration: none;
+            border-bottom: 1px solid #515c7e;
+            color: #515c7e;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+       
+
+        @media screen and (max-width: 500px) {
+          .contain {
+            min-width: 300px;
+          }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="contain" style="">
+        <form id="short-url-form">
+            <h5>SHORT URL TOOL! </h5>
+            <input type="text" id="username" placeholder="Username" >
+            <input type="password" id="password" placeholder="Password" >
+            <input type="text" id="url" placeholder="URL to shorten">
+            <button type="submit">Generate Short URL</button>
+        </form>
+
+        <div id="resultParent">
+         <div id="result"></div>
+         <div><button id="copyButton">Copy URL</button></div>
+        </div>
+        
+    </div>
+    <br>
+    <script>
+
+        var domain = "https://shortlink.sohanyu.workers.dev/";
+        
+        document.getElementById('short-url-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+            let url = document.getElementById('url').value;
+
+            let response = await fetch('https://shortlink.sohanyu.workers.dev', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Basic ' + username + ':' + password,
+                    'Content-Type': 'text/plain'
+                },
+                body: url
+            });
+
+            if (response.ok) {
+                let id = await response.text();
+                var r = domain + id;
+                document.getElementById('result').innerHTML = '<a id="resultLink" target="_blank" href="' + r +'"/>'+r+'</a>';
+            } else {
+                document.getElementById('result').textContent = 'Error: ' + response.status;
+            }
+        });
+
+        document.getElementById('copyButton').addEventListener('click', function() {
+            var resultLink = document.getElementById('resultLink');
+            if (resultLink) {
+                navigator.clipboard.writeText(resultLink.href).then(function() {
+                    document.getElementById('copyButton').textContent = ' URL copied to clipboard!';
+                }, function(err) {
+                    document.getElementById('copyButton').textContent = ' Error copying URL: ' + err;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

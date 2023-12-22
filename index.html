@@ -107,6 +107,8 @@
         document.getElementById('short-url-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            document.getElementById('result').innerText = "";
+
             let username = document.getElementById('username').value;
             let password = document.getElementById('password').value;
             let url = document.getElementById('url').value;
@@ -137,6 +139,8 @@
                 var err = response.status == 401 ? '账密错误':'';
                 document.getElementById('result').textContent = response.status + ' Error : ' + err;
             }
+
+            document.getElementById('sub').innerText = "Generate Short URL";
         });
 
         document.getElementById('copyButton').addEventListener('click', function() {

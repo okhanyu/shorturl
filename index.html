@@ -1,106 +1,74 @@
-<!DOCTYPE html>
-<html lang=zh-cn>
+﻿<!DOCTYPE html>
+<html lang="zh-ch" >
 <head>
-    <meta charset="utf-8">
+   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1,viewport-fit=cover,shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <title>SHORT URL TOOL !</title>
+    <link rel="stylesheet" href="./style.css">
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Roboto', sans-serif;
-            background-color: #f2f2f2;
-        }
-
-         .contain{
-            display: flex;flex-wrap: wrap;flex-direction: column;min-width: 420px;max-width: 100%;width: 420px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
-        button {
-            border: 0px solid #ccc;
-            background-color: #445483;
-            color: #fff;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #677ec3;
-        }
-        #resultParent {
-            margin-top: 20px;
-            font-weight: bold;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            min-height: 22px;
-        }
-        #result {
-/*            margin-top: 20px;*/
-            font-weight: bold;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #fff;
-            min-height: 22px;
-        }
-        #copyButton{
-            margin-top: 20px;
-            width: 100%;
-        }
-        a{
-            text-decoration: none;
-            border-bottom: 1px solid #515c7e;
-            color: #515c7e;
-            word-break: break-all;
-            word-wrap: break-word;
-        }
        
-
-        @media screen and (max-width: 500px) {
-          .contain {
-            min-width: 300px;
-          }
-        }
-
     </style>
 </head>
 <body>
-    <div class="contain" style="">
-        <form id="short-url-form">
-            <h4>SHORT URL TOOL! </h4>
-            <input type="text" id="username" placeholder="Username" >
-            <input type="password" id="password" placeholder="Password" >
-            <input type="text" id="url" placeholder="URL to shorten">
-            <button type="submit" id="sub">Generate Short URL</button>
-        </form>
-
-        <div id="resultParent">
-         <div id="result"></div>
-         <div><button id="copyButton">Copy URL</button></div>
-        </div>
-        
-    </div>
-    <br>
-    <script>
+<div class="contain" style="">
+	<form id="short-url-form">
+		<h4>
+			Going.ee | SHORT URL TOOL!
+		</h4>
+		<input type="text" id="username" placeholder="Username">
+		<input type="password" id="password" placeholder="Password">
+		<input type="text" id="url" placeholder="URL to shorten">
+		<div class="wrapper">
+			<button type="submit" id="sub">
+				<a>
+					<div class="scale rotate-4">
+						G
+					</div>
+					<div class="scale rotate-2">
+						e
+					</div>
+					<div class="scale rotate-3">
+					
+					</div>
+					<div class="scale rotate-1">
+						t
+					</div>
+					<div class="scale rotate-2">
+					</div>
+				</a>
+			</button>
+		</div>
+	</form>
+	<div id="resultParent">
+		<div id="tips"></div>
+		<div id="result">
+		</div>
+		<div class="wrapper">
+			<button id="copyButton">
+				<a>
+					<div class="scale rotate-4">
+						C
+					</div>
+					<div class="scale rotate-2">
+						o
+					</div>
+					<div class="scale rotate-3">
+						p
+					</div>
+					<div class="scale rotate-1">
+						y
+					</div>
+					<div class="scale rotate-2">
+					</div>
+				</a>
+			</button>
+		</div>
+	</div>
+</div>
+<br>
+   <script>
 
         var domain = "https://go.going.ee/";
         var apiurl = "https://go.going.ee";
@@ -114,11 +82,11 @@
             let url = document.getElementById('url').value;
 
             if (username == "" || username == "" || url == ""){
-               document.getElementById('sub').innerText = "No, Incomplete Form"; 
+               document.getElementById('tips').innerText = "No, Incomplete Form"; 
                return;
             }
 
-           document.getElementById('sub').innerText = "Processing...";
+           document.getElementById('tips').innerText = "Processing...";
 
             
 
@@ -135,21 +103,23 @@
                 let id = await response.text();
                 var r = domain + id;
                 document.getElementById('result').innerHTML = '<a id="resultLink" target="_blank" href="' + r +'"/>'+r+'</a>';
+                document.getElementById('tips').innerText = "Success : ";
+
             } else {
                 var err = response.status == 401 ? '账密错误':'';
                 document.getElementById('result').textContent = response.status + ' Error : ' + err;
             }
-
-            document.getElementById('sub').innerText = "Generate Short URL";
         });
 
         document.getElementById('copyButton').addEventListener('click', function() {
             var resultLink = document.getElementById('resultLink');
             if (resultLink) {
                 navigator.clipboard.writeText(resultLink.href).then(function() {
-                    document.getElementById('copyButton').textContent = ' URL copied to clipboard!';
+                	   document.getElementById('tips').innerText = " URL copied to clipboard !";
+                    // document.getElementById('copyButton').textContent = ' URL copied to clipboard!';
                 }, function(err) {
-                    document.getElementById('copyButton').textContent = ' Error copying URL: ' + err;
+                	 document.getElementById('tips').innerText = ' Error copying URL: ' + err;
+                    // document.getElementById('copyButton').textContent = ' Error copying URL: ' + err;
                 });
             }
         });

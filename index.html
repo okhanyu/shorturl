@@ -90,7 +90,7 @@
             <input type="text" id="username" placeholder="Username" >
             <input type="password" id="password" placeholder="Password" >
             <input type="text" id="url" placeholder="URL to shorten">
-            <button type="submit">Generate Short URL</button>
+            <button type="submit" id="sub">Generate Short URL</button>
         </form>
 
         <div id="resultParent">
@@ -110,6 +110,15 @@
             let username = document.getElementById('username').value;
             let password = document.getElementById('password').value;
             let url = document.getElementById('url').value;
+
+            if (username == "" || username == "" || url == ""){
+               document.getElementById('sub').innerText = "No, Incomplete Form"; 
+               return;
+            }
+
+           document.getElementById('sub').innerText = "Processing...";
+
+            
 
             let response = await fetch(apiurl, {
                 method: 'POST',

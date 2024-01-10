@@ -116,7 +116,7 @@
             		err = '账密错误';
             	}
             	if (response.status == 409){
-            		err = '指定短链已存在，请更换';
+            		err = '指定短链key已存在，请更换';
             	}
                 document.getElementById('result').textContent = response.status + ' Error : ' + err;
             }

@@ -20,6 +20,7 @@
 		<input type="text" id="username" placeholder="Username">
 		<input type="password" id="password" placeholder="Password">
 		<input type="text" id="url" placeholder="URL to shorten">
+		<input type="text" id="shortkey" placeholder="自定义短链key">
 		<div class="wrapper">
 			<button type="submit" id="sub">
 				<a>
@@ -80,15 +81,18 @@
             let username = document.getElementById('username').value;
             let password = document.getElementById('password').value;
             let url = document.getElementById('url').value;
+            let shortkey = document.getElementById('shortkey').value;
+            
 
-            if (username == "" || username == "" || url == ""){
-               document.getElementById('tips').innerText = "No, Incomplete Form"; 
+            if (username == "" || password == "" || url == ""){
+               document.getElementById('tips').innerText = "用户名、密码、URL不能为空"; 
                return;
             }
 
            document.getElementById('tips').innerText = "Processing...";
 
             
+            let body = JSON.stringify({ url: url, shortkey: shortkey });
 
             let response = await fetch(apiurl, {
                 method: 'POST',
@@ -96,7 +100,7 @@
                     'Authorization': 'Basic ' + username + ':' + password,
                     'Content-Type': 'text/plain'
                 },
-                body: url
+                body: body
             });
 
             if (response.ok) {

@@ -89,7 +89,7 @@
                return;
             }
 
-           document.getElementById('tips').innerText = "Processing...";
+            document.getElementById('tips').innerText = "Processing...";
 
             
             let body = JSON.stringify({ url: url, shortkey: shortkey });
@@ -110,7 +110,14 @@
                 document.getElementById('tips').innerText = "Success : ";
 
             } else {
-                var err = response.status == 401 ? '账密错误':'';
+
+            	var err = "";
+            	if (response.status == 401){
+            		err = '账密错误';
+            	}
+            	if (response.status == 409){
+            		err = '指定短链已存在，请更换';
+            	}
                 document.getElementById('result').textContent = response.status + ' Error : ' + err;
             }
         });
